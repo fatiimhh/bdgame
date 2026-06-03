@@ -17,6 +17,14 @@ const config = {
       gravity: { y: 0 },
       debug: false,
     },
+
+    arcade: {
+  gravity: { y: 0 },
+  debug: false,
+  damping: true,
+}
+
+
   },
   scene: [
 BootScene,
