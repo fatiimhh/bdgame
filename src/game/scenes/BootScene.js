@@ -9,6 +9,7 @@ export default class BootScene extends Phaser.Scene {
     this.add.text(400, 300, "Booting Gotham...", {
       fontSize: "24px",
       color: "#00bfff",
+      
     });
 
     console.log("BootScene running");

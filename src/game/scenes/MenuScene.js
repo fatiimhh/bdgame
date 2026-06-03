@@ -7,7 +7,7 @@ export default class MenuScene extends Phaser.Scene {
 
   create() {
    
-    this.cameras.main.setBackgroundColor("#050510");  // background
+    this.cameras.main.setBackgroundColor("#050510");  
 
     // fade effect
     this.cameras.main.fadeIn(2000, 0, 0, 0);
