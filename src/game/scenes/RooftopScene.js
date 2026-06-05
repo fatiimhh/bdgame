@@ -44,7 +44,7 @@ export default class RooftopScene extends Phaser.Scene {
 
     ///////////////////////////////////
     //  SOUNDS
-    /* this.sound.pauseOnBlur = false;
+     this.sound.pauseOnBlur = false;
 
     this.sounds = {
       rain: this.sound.add("rain", {
@@ -68,7 +68,7 @@ export default class RooftopScene extends Phaser.Scene {
 
     // Start ambience
     this.sounds.rain.play();
-    this.sounds.wind.play(); */
+    this.sounds.wind.play(); 
 ///////////////////////////////////
 
 
@@ -125,7 +125,7 @@ export default class RooftopScene extends Phaser.Scene {
 
         /////////////////
         //  collect sound
-        //this.sounds.collect.play();
+        this.sounds.collect.play();
         /////////////////
 
         this.signalsCollected++;
@@ -210,7 +210,7 @@ if (this.cursors.left.isDown) { // flip sprite based on direction
 
             //////
       //  dash sound
-      // this.sounds.dash.play();
+       this.sounds.dash.play();
             //////
 
       //  cinematic shake
