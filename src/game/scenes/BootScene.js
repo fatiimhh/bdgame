@@ -7,7 +7,12 @@ export default class BootScene extends Phaser.Scene {
 
   preload() {
     //  Sprite
-    this.load.image("batman", "/assets/batman.png");
+    //this.load.image("batman", "/assets/batman.png");
+
+    this.load.spritesheet("batman", "/assets/batman_walk.png", {
+  frameWidth: 48,
+  frameHeight: 48,
+});
 
     //  Sounds
    // this.load.audio("rain", "/sounds/rain.mp3");

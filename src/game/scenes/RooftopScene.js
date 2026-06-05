@@ -21,8 +21,20 @@ export default class RooftopScene extends Phaser.Scene {
     //  BATMAN SPRITE
     this.player = this.physics.add.sprite(100, 600, "batman");
 
-    this.player.setScale(0.1); 
+    this.player.setScale(0.9); 
     this.player.setCollideWorldBounds(true);
+
+
+// walk animation
+    this.anims.create({   
+  key: "walk",
+  frames: this.anims.generateFrameNumbers("batman", {
+    start: 0,
+    end: 3,
+  }),
+  frameRate: 10,
+  repeat: -1,
+});
 
     //  Camera
     this.cameras.main.startFollow(this.player);
@@ -76,7 +88,7 @@ export default class RooftopScene extends Phaser.Scene {
 
     //  Mission system
     this.signalsCollected = 0;
-    this.totalSignals = 3;
+    this.totalSignals = 5;
 
     this.signals = [];
 
@@ -104,7 +116,7 @@ export default class RooftopScene extends Phaser.Scene {
 
       this.signals.push(signal);
 
-      //  collection
+      //  collection overlap
       this.physics.add.overlap(this.player, signal, () => {
         if (!signal.active) return;
 
@@ -128,7 +140,7 @@ export default class RooftopScene extends Phaser.Scene {
       });
     }
 
-    //  Collision
+    //  collision with ground
     this.physics.add.collider(this.player, this.ground);
 
     //  UI
@@ -156,11 +168,30 @@ export default class RooftopScene extends Phaser.Scene {
     let vx = this.player.body.velocity.x;
     let vy = this.player.body.velocity.y;
 
-    //  Movement input
+    const isMoving =
+  this.cursors.left.isDown ||
+  this.cursors.right.isDown ||
+  this.cursors.up.isDown ||
+  this.cursors.down.isDown;
+
+if (isMoving) {             // play walk animation
+  this.player.anims.play("walk", true);
+} else {
+  this.player.anims.stop();
+  this.player.setFrame(0); // idle frame
+}
+
+if (this.cursors.left.isDown) { // flip sprite based on direction
+  this.player.setFlipX(true);
+} else if (this.cursors.right.isDown) {
+  this.player.setFlipX(false);
+}
+
+    //  movement input
     if (this.cursors.left.isDown) vx -= acceleration;
-    if (this.cursors.right.isDown) vx += acceleration;
+  if (this.cursors.right.isDown) vx += acceleration;
     if (this.cursors.up.isDown) vy -= acceleration;
-    if (this.cursors.down.isDown) vy += acceleration;
+   if (this.cursors.down.isDown) vy += acceleration;
 
     //  DASH
     if (
@@ -191,12 +222,12 @@ export default class RooftopScene extends Phaser.Scene {
     this.cityMid.x = 640 + vx * 0.05;
     this.cityFront.x = 640 + vx * 0.08;
 
-    //  cooldown timer
+    //  cooldown timer 
     if (this.dashCooldown > 0) {
       this.dashCooldown -= delta;
     }
 
-    //  friction
+    //  friction 
     vx *= friction;
     vy *= friction;
 
@@ -207,8 +238,8 @@ export default class RooftopScene extends Phaser.Scene {
     // movement apply
     this.player.body.setVelocity(vx, vy);
 
-    //  tiny tilt effect
-    this.player.rotation = vx * 0.001;
+    //  tilt effect 
+   // this.player.rotation = vx * 0.001;
   }
 
   //  UI
