@@ -5,6 +5,8 @@ import MenuScene from "./scenes/MenuScene";
 import RooftopScene from "./scenes/RooftopScene";
 import DetectiveScene from "./scenes/DetectiveScene";
 import FinalScene from "./scenes/FinalScene";
+import CutsceneScene from "./scenes/CutsceneScene";
+
 
 const config = {
   type: Phaser.AUTO,
@@ -27,7 +29,8 @@ const config = {
 
   },
   scene: [
-BootScene,
+  BootScene,
+  CutsceneScene,
   MenuScene,
   RooftopScene,
   DetectiveScene,

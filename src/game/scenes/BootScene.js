@@ -33,8 +33,8 @@ export default class BootScene extends Phaser.Scene {
     console.log("BootScene running");
 
     this.time.delayedCall(1000, () => {
-      console.log("Switching to MenuScene");
-      this.scene.start("MenuScene");
+      console.log("Switching to CutsceneScene");
+      this.scene.start("CutsceneScene");
     });
   }
 }

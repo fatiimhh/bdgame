@@ -54,9 +54,9 @@ export default class MenuScene extends Phaser.Scene {
 
     const message =
       "ACCESSING GOTHAM MAINFRAME...\n\n" +
-      "SCANNING SUBJECT PROFILE...\n" +
-      "DISCIPLINE DETECTED.\n" +
-      "RESILIENCE DETECTED.\n" +
+      //"SCANNING SUBJECT PROFILE...\n" +
+     // "DISCIPLINE DETECTED.\n" +
+      //"RESILIENCE DETECTED.\n" +
       "WELCOME BACK.";
 
     this.typeText(message);
