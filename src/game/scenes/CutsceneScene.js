@@ -6,7 +6,7 @@ export default class CutsceneScene extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setBackgroundColor("#000000");
+    this.cameras.main.setBackgroundColor("#0a86ac");
 
     const lines = [
       "> ACCESSING BATCOMPUTER...",
@@ -20,10 +20,10 @@ export default class CutsceneScene extends Phaser.Scene {
       "> STATUS: READY",
     ];
 
-    let currentLine = 1; 
+    let currentLine = 0; 
 
     this.textObject = this.add.text(80, 120, "", {
-      fontSize: "28px",
+      fontSize: "25px",
       color: "#00ff99",
       fontFamily: "monospace",
       lineSpacing: 9,
@@ -51,14 +51,14 @@ export default class CutsceneScene extends Phaser.Scene {
   // logo appears
   const logo = this.add.image(640, 360, "batLogo");
 
-  logo.setScale(0.05);
+  logo.setScale(0.05); 
   logo.setAlpha(0);
 
   // cinematic reveal
   this.tweens.add({
     targets: logo,
-    scale: 0.5,
-    alpha: 1,
+    scale: 0.5, 
+    alpha: 1, 
     duration: 2000,
     ease: "Power2",
   });
