@@ -20,19 +20,19 @@ export default class CutsceneScene extends Phaser.Scene {
       "> STATUS: READY",
     ];
 
-    let currentLine = 0;
+    let currentLine = 1; 
 
     this.textObject = this.add.text(80, 120, "", {
       fontSize: "28px",
       color: "#00ff99",
       fontFamily: "monospace",
-      lineSpacing: 12,
+      lineSpacing: 9,
     });
 
     this.currentText = "";
 
     this.time.addEvent({
-      delay: 1200,
+      delay: 2000,
       repeat: lines.length - 1,
       callback: () => {
         this.currentText += lines[currentLine] + "\n\n";
@@ -52,5 +52,13 @@ export default class CutsceneScene extends Phaser.Scene {
         }
       },
     });
+
+    // narration voiceover
+this.voice = this.sound.add("narration", {
+  volume: 0.8,
+});
+
+this.voice.play();
+
   }
 }
