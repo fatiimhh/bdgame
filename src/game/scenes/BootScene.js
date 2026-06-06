@@ -14,6 +14,10 @@ export default class BootScene extends Phaser.Scene {
   frameHeight: 48,
 });
 
+// cutscene logo
+this.load.image("batLogo", "/assets/batman_logo.png");
+
+
     //  Sounds
     this.load.audio("rain", "/sounds/rain.mp3");
     this.load.audio("wind", "/sounds/wind.mp3");

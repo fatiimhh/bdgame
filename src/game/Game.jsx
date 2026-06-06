@@ -27,7 +27,7 @@ export default function Game() {
   return (
     <div
       id="game-container"
-     style={{ width: "100vw", height: "100vh" }}
+   //  style={{ width: "100vw", height: "100vh" }}
     />
   );
 }

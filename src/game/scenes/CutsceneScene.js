@@ -46,9 +46,31 @@ export default class CutsceneScene extends Phaser.Scene {
 
         // final transition
         if (currentLine === lines.length) {
-          this.time.delayedCall(1800, () => {
-            this.scene.start("MenuScene");
-          });
+         this.time.delayedCall(1200, () => {
+
+  // logo appears
+  const logo = this.add.image(640, 360, "batLogo");
+
+  logo.setScale(0.05);
+  logo.setAlpha(0);
+
+  // cinematic reveal
+  this.tweens.add({
+    targets: logo,
+    scale: 0.5,
+    alpha: 1,
+    duration: 2000,
+    ease: "Power2",
+  });
+
+  // dramatic flash
+  this.cameras.main.flash(800, 255, 255, 255);
+
+  // move to menu
+  this.time.delayedCall(3500, () => {
+    this.scene.start("MenuScene");
+  });
+});
         }
       },
     });
