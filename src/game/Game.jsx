@@ -15,8 +15,8 @@ export default function Game() {
       }
     };
 
-    // wait for DOM to exist
-    setTimeout(startGame, 0);
+    
+    setTimeout(startGame, 0); 
 
     return () => {
       gameRef.current?.destroy(true);
