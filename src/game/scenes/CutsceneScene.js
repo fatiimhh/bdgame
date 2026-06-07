@@ -24,7 +24,7 @@ export default class CutsceneScene extends Phaser.Scene {
 
     this.textObject = this.add.text(80, 120, "", {
       fontSize: "25px",
-      color: "#00ff99",
+      color: "#abcebf",
       fontFamily: "monospace",
       lineSpacing: 9,
     });
