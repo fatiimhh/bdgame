@@ -4,7 +4,7 @@ import BootScene from "./scenes/BootScene";
 import MenuScene from "./scenes/MenuScene";
 import RooftopScene from "./scenes/RooftopScene";
 import DetectiveScene from "./scenes/DetectiveScene";
-import FinalScene from "./scenes/FinalScene";
+import PursuitScene from "./scenes/PursuitScene";
 import CutsceneScene from "./scenes/CutsceneScene";
 
 
@@ -34,7 +34,7 @@ const config = {
   MenuScene,
   RooftopScene,
   DetectiveScene,
-  FinalScene  ],
+  PursuitScene  ],
   backgroundColor: "#000000",
 };
 
