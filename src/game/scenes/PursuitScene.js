@@ -14,6 +14,28 @@ export default class PursuitScene extends Phaser.Scene {
     this.add.rectangle(640, 200, 1400, 300, 0x0a0a1a);
     this.add.rectangle(640, 500, 1400, 400, 0x050514);
 
+
+// sound effects
+    this.jumpSfx = this.sound.add("jump", {
+  volume: 0.5,
+});
+
+this.captureSfx = this.sound.add("capture", {
+  volume: 0.7,
+});
+
+this.alertSfx = this.sound.add("alert", {
+  volume: 0.6,
+});
+
+this.music = this.sound.add("pursuit", {
+  loop: true,
+  volume: 0.35,
+});
+
+this.music.play();
+
+
     // platforms group
     this.platforms = this.physics.add.staticGroup();
 
@@ -49,7 +71,27 @@ export default class PursuitScene extends Phaser.Scene {
     this.player.setDragX(800);
 
     // TARGET
-    this.target = this.add.rectangle(1100, 300, 40, 40, 0xff0033);
+    //this.target = this.add.rectangle(1100, 300, 40, 40, 0xff0033);
+
+
+    this.target = this.add.circle(1100, 300, 25, 0xff0033); // change to circle shape
+
+    this.targetGlow = this.add.circle( // glow effect
+    1100,
+    300,
+    40,
+    0xff0033,
+    0.15
+    );
+
+    this.tweens.add({ 
+  targets: this.targetGlow, // animate glow
+  scale: 1.3,
+  alpha: 0.05,
+  duration: 600,
+  yoyo: true,
+  repeat: -1,
+});
 
     this.physics.add.existing(this.target);
 
@@ -178,6 +220,8 @@ export default class PursuitScene extends Phaser.Scene {
 
       this.player.setVelocityY(-700);
 
+      this.jumpSfx.play(); // play jump sound
+
       // jump frame
       this.player.setFrame(2);
 
@@ -187,6 +231,9 @@ export default class PursuitScene extends Phaser.Scene {
 
     //  TARGET MOVEMENT
     this.target.body.setVelocityX(140 * this.targetDirection);
+
+    this.targetGlow.x = this.target.x; // keep glow on target
+    this.targetGlow.y = this.target.y;
 
     // reverse direction
     if (this.target.x <= 200) {
@@ -211,6 +258,10 @@ export default class PursuitScene extends Phaser.Scene {
     this.timerText.setText(
       `TIME LEFT: ${this.timeLeft}`
     );
+
+    if (this.timeLeft <= 10) { // play alert sound when time is running out
+  this.alertSfx.play(); 
+}
   }
 
   // WIN
@@ -231,9 +282,13 @@ export default class PursuitScene extends Phaser.Scene {
       this.scene.start("FinalLevelScene");
 
     });
+
+    this.captureSfx.play(); // play capture sound
+
+    this.music.stop();
   }
 
-  // LOSE
+  // LOSE 
   gameOver() {
 
     this.physics.pause();
