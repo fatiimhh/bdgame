@@ -17,38 +17,21 @@ export default class FinalLevelScene extends Phaser.Scene {
     // rain
     this.createRain();
 
-// sound effects
-    this.hitSfx = this.sound.add("hit", {
-  volume: 0.5,
-});
+    //  sounds
+    this.hitSfx = this.sound.add("hit", { volume: 0.5 });
 
+    this.music = this.sound.add("gotham", {
+      loop: true,
+      volume: 0.4,
+    });
 
-this.music = this.sound.add("gotham", {
-  loop: true,
-  volume: 0.4,
-});
+    this.music.play();
 
-this.music.play();
+    // Bat Signal
+    this.batSignalGlow = this.add.circle(640, 360, 90, 0xffff99, 0.12);
 
+    this.batSignal = this.add.circle(640, 360, 45, 0xffff00);
 
-
-    //  Bat Signal
-    this.batSignalGlow = this.add.circle(
-      640,
-      360,
-      90,
-      0xffff99,
-      0.12
-    );
-
-    this.batSignal = this.add.circle(
-      640,
-      360,
-      45,
-      0xffff00
-    );
-
-    // glow pulse
     this.tweens.add({
       targets: this.batSignalGlow,
       scale: 1.3,
@@ -60,27 +43,21 @@ this.music.play();
 
     //  player
     this.player = this.physics.add.sprite(640, 620, "batman");
-
     this.player.setDisplaySize(60, 80);
-
     this.player.setCollideWorldBounds(true);
-
-    // top-down movement
     this.player.body.setAllowGravity(false);
 
-    //  controls
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    //  enemies
+    //  ENEMIES GROUP (FIXED)
     this.enemies = this.physics.add.group();
 
-    //  Bat Signal health
+    //  health
     this.signalHealth = 5;
 
-    //  survival timer
+    //  timer
     this.timeLeft = 35;
 
-    // UI
     this.healthText = this.add.text(20, 20, "", {
       fontSize: "22px",
       color: "#ff5555",
@@ -95,7 +72,7 @@ this.music.play();
 
     this.updateUI();
 
-    // spawn enemies repeatedly
+    //spawn loop
     this.enemySpawner = this.time.addEvent({
       delay: 1200,
       loop: true,
@@ -104,121 +81,81 @@ this.music.play();
       },
     });
 
-    //  countdown
+    // timer
     this.timerEvent = this.time.addEvent({
       delay: 1000,
-      repeat: 44,
+      repeat: 34,
       callback: () => {
 
         this.timeLeft--;
-
         this.updateUI();
 
-        // win
         if (this.timeLeft <= 0) {
           this.winLevel();
-
-
-          this.sound.play("capture", { volume: 0.9 }); // play capture sound
-          this.music.stop();
         }
       },
     });
 
-    //  player intercept enemies
-    this.physics.add.overlap(
-      this.player,
-      this.enemies,
-      (player, enemy) => {
-
-        enemy.destroy();
-
-        this.cameras.main.flash(100, 0, 255, 120);
-      }
-    );
-
-    //  intro text
-    this.introText = this.add.text(
-      640,
-      90,
-      "DEFEND THE BAT SIGNAL",
-      {
-        fontSize: "28px",
-        color: "#00bfff",
-        fontFamily: "monospace",
-      }
-    ).setOrigin(0.5);
-
-    this.tweens.add({
-      targets: this.introText,
-      alpha: 0,
-      duration: 2500,
-      delay: 1200,
+    //  player hits enemy
+    this.physics.add.overlap(this.player, this.enemies, (player, enemy) => {
+      enemy.glow?.destroy();
+      enemy.destroy();
+      this.cameras.main.flash(100, 0, 255, 120);
     });
+
+    this.introText = this.add.text(640, 90, "DEFEND THE BAT SIGNAL", {
+      fontSize: "28px",
+      color: "#00bfff",
+      fontFamily: "monospace",
+    }).setOrigin(0.5);
   }
 
   update() {
 
-    //  movement
     const speed = 320;
 
     let vx = 0;
     let vy = 0;
 
-    if (this.cursors.left.isDown) {
-      vx = -speed;
-      this.player.setFlipX(true);
-    }
-
-    if (this.cursors.right.isDown) {
-      vx = speed;
-      this.player.setFlipX(false);
-    }
-
-    if (this.cursors.up.isDown) {
-      vy = -speed;
-    }
-
-    if (this.cursors.down.isDown) {
-      vy = speed;
-    }
+    if (this.cursors.left.isDown) vx = -speed;
+    if (this.cursors.right.isDown) vx = speed;
+    if (this.cursors.up.isDown) vy = -speed;
+    if (this.cursors.down.isDown) vy = speed;
 
     this.player.setVelocity(vx, vy);
 
     //  enemy AI
     this.enemies.getChildren().forEach((enemy) => {
 
-      this.physics.moveToObject(
-        enemy,
-        this.batSignal,
-        110
-      );
+      if (enemy.glow) {
+        enemy.glow.x = enemy.x;
+        enemy.glow.y = enemy.y;
+      }
 
-      //  enemy reached Bat Signal
-      const distance = Phaser.Math.Distance.Between(
+      enemy.setAlpha(Phaser.Math.FloatBetween(0.85, 1));
+
+      this.physics.moveToObject(enemy, this.batSignal, 110);
+
+      const dist = Phaser.Math.Distance.Between(
         enemy.x,
         enemy.y,
         this.batSignal.x,
         this.batSignal.y
       );
 
-      if (distance < 55) {
+      if (dist < 55) {
 
+        enemy.glow?.destroy();
         enemy.destroy();
 
         this.signalHealth--;
-
         this.updateUI();
 
-        this.hitSfx.play(); // play hit sound
+        this.hitSfx.play();
 
-
-        // damage effect
         this.cameras.main.shake(200, 0.01);
-
         this.cameras.main.flash(150, 255, 0, 0);
 
-        // lose
         if (this.signalHealth <= 0) {
           this.gameOver();
         }
@@ -226,7 +163,7 @@ this.music.play();
     });
   }
 
-  //  enemy spawn
+  //  SPAWN ENEMY 
   spawnEnemy() {
 
     const positions = [
@@ -236,39 +173,42 @@ this.music.play();
       { x: Phaser.Math.Between(0, 1280), y: 720 },
     ];
 
-    const spawn =
-      Phaser.Utils.Array.GetRandom(positions);
+    const spawn = Phaser.Utils.Array.GetRandom(positions);
 
-    const enemy = this.add.circle(
-      spawn.x,
-      spawn.y,
-      18,
-      0xff0033
-    );
+    // glow
+    const glow = this.add.circle(spawn.x, spawn.y, 28, 0xff0000, 0.15);
+
+    // enemy
+    const enemy = this.add.circle(spawn.x, spawn.y, 16, 0xff0000, 1);
 
     this.physics.add.existing(enemy);
 
+    enemy.glow = glow;
+
     this.enemies.add(enemy);
+
+    this.tweens.add({
+      targets: glow,
+      alpha: 0.05,
+      scale: 1.4,
+      duration: 600,
+      yoyo: true,
+      repeat: -1,
+    });
   }
 
-  //  UI
   updateUI() {
-
-    this.healthText.setText(
-      `BAT SIGNAL: ${this.signalHealth}`
-    );
-
-    this.timerText.setText(
-      `SURVIVE: ${this.timeLeft}`
-    );
+    this.healthText.setText(`BAT SIGNAL: ${this.signalHealth}`);
+    this.timerText.setText(`SURVIVE: ${this.timeLeft}`);
   }
 
-  //  WIN
   winLevel() {
 
     this.physics.pause();
-
     this.enemySpawner.remove();
+
+    this.music.stop();
+    this.sound.play("capture");
 
     this.cameras.main.flash(700, 255, 255, 255);
 
@@ -278,21 +218,14 @@ this.music.play();
       fontFamily: "monospace",
     }).setOrigin(0.5);
 
-    
-
-
     this.time.delayedCall(3000, () => {
-
       this.scene.start("EndingScene");
-
     });
   }
 
-  // LOSE
   gameOver() {
 
     this.physics.pause();
-
     this.enemySpawner.remove();
 
     this.cameras.main.shake(500, 0.02);
@@ -304,13 +237,10 @@ this.music.play();
     }).setOrigin(0.5);
 
     this.time.delayedCall(2500, () => {
-
       this.scene.restart();
-
     });
   }
 
-  //  rain effect
   createRain() {
 
     for (let i = 0; i < 100; i++) {
@@ -318,14 +248,7 @@ this.music.play();
       const x = Phaser.Math.Between(0, 1280);
       const y = Phaser.Math.Between(0, 720);
 
-      const drop = this.add.rectangle(
-        x,
-        y,
-        2,
-        12,
-        0x88ccff,
-        0.25
-      );
+      const drop = this.add.rectangle(x, y, 2, 12, 0x88ccff, 0.25);
 
       this.tweens.add({
         targets: drop,
