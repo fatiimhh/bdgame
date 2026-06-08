@@ -17,6 +17,21 @@ export default class FinalLevelScene extends Phaser.Scene {
     // rain
     this.createRain();
 
+// sound effects
+    this.hitSfx = this.sound.add("hit", {
+  volume: 0.5,
+});
+
+
+this.music = this.sound.add("gotham", {
+  loop: true,
+  volume: 0.4,
+});
+
+this.music.play();
+
+
+
     //  Bat Signal
     this.batSignalGlow = this.add.circle(
       640,
@@ -102,6 +117,10 @@ export default class FinalLevelScene extends Phaser.Scene {
         // win
         if (this.timeLeft <= 0) {
           this.winLevel();
+
+
+          this.sound.play("capture", { volume: 0.9 }); // play capture sound
+          this.music.stop();
         }
       },
     });
@@ -191,6 +210,9 @@ export default class FinalLevelScene extends Phaser.Scene {
 
         this.updateUI();
 
+        this.hitSfx.play(); // play hit sound
+
+
         // damage effect
         this.cameras.main.shake(200, 0.01);
 
@@ -255,6 +277,9 @@ export default class FinalLevelScene extends Phaser.Scene {
       color: "#00ff99",
       fontFamily: "monospace",
     }).setOrigin(0.5);
+
+    
+
 
     this.time.delayedCall(3000, () => {
 
