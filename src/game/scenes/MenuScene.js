@@ -15,6 +15,14 @@ export default class MenuScene extends Phaser.Scene {
     // rain effect
     this.createRain();
 
+      // sound effect
+     this.music = this.sound.add("background", {
+      loop: false,
+      volume: 0.9,
+    });
+
+    this.music.play();
+
     // main title
     const title = this.add.text(
       640,

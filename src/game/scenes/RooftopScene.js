@@ -44,6 +44,14 @@ export default class RooftopScene extends Phaser.Scene {
 
     ///////////////////////////////////
     //  SOUNDS
+
+    this.music = this.sound.add("background2", {
+      loop: false,
+      volume: 0.4,
+    });
+
+    this.music.play();
+
      this.sound.pauseOnBlur = false;
 
     this.sounds = {

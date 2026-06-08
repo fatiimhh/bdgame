@@ -42,6 +42,9 @@ this.load.image("batLogo", "/assets/batman_logo.png");
     this.load.audio("hit", "/sounds/hit.mp3");
     this.load.audio("gotham", "/sounds/gotham.mp3");
 
+    this.load.audio("background", "/sounds/background.mp3");
+        this.load.audio("background2", "/sounds/background2.mp3");
+
 
   }
 

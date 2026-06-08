@@ -9,6 +9,13 @@ export default class DetectiveScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor("#000");
 
     // sounds
+
+    this.music = this.sound.add("background2", {
+      loop: false,
+      volume: 0.4,
+    });
+
+    this.music.play();
     this.clickSfx = this.sound.add("click");
     this.correctSfx = this.sound.add("correct");
     this.wrongSfx = this.sound.add("wrong");

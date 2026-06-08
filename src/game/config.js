@@ -7,6 +7,7 @@ import DetectiveScene from "./scenes/DetectiveScene";
 import PursuitScene from "./scenes/PursuitScene";
 import CutsceneScene from "./scenes/CutsceneScene";
 import FinalLevelScene from "./scenes/FinalLevelScene";
+import EndingScene from "./scenes/EndingScene";
 
 
 const config = {
@@ -37,7 +38,7 @@ const config = {
   DetectiveScene,
   PursuitScene,
   FinalLevelScene, 
-
+  EndingScene,
  ],
   backgroundColor: "#000000",
 };
