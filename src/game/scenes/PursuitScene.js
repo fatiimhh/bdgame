@@ -30,7 +30,7 @@ this.captureSfx = this.sound.add("capture", {
 
 this.music = this.sound.add("pursuit", {
   loop: true,
-  volume: 0.35,
+  volume: 0.40,
 });
 
 this.music.play();
