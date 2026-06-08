@@ -33,11 +33,16 @@ this.load.image("batLogo", "/assets/batman_logo.png");
     this.load.audio("wrong", "/sounds/wrong.mp3");
     this.load.audio("glitch", "/sounds/glitch.mp3");
 
-// pursuit scene sounds
+// pursuit scene & final level scene sounds
     this.load.audio("jump", "/sounds/jump.mp3");
     this.load.audio("pursuit", "/sounds/pursuit.mp3");
     this.load.audio("capture", "/sounds/capture.mp3");
    // this.load.audio("alert", "/sounds/alert.mp3");
+
+    this.load.audio("hit", "/sounds/hit.mp3");
+    this.load.audio("gotham", "/sounds/gotham.mp3");
+
+
   }
 
   create() {
