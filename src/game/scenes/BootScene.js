@@ -18,7 +18,7 @@ export default class BootScene extends Phaser.Scene {
 this.load.image("batLogo", "/assets/batman_logo.png");
 
 
-    //  rooftop scene sounds
+    // rooftop scene sounds
     this.load.audio("rain", "/sounds/rain.mp3");
     this.load.audio("wind", "/sounds/wind.mp3");
     this.load.audio("dash", "/sounds/dash.mp3");
@@ -39,11 +39,15 @@ this.load.image("batLogo", "/assets/batman_logo.png");
     this.load.audio("capture", "/sounds/capture.mp3");
    // this.load.audio("alert", "/sounds/alert.mp3");
 
+   // ending scene sounds
     this.load.audio("hit", "/sounds/hit.mp3");
     this.load.audio("gotham", "/sounds/gotham.mp3");
 
+    // Menu background music
     this.load.audio("background", "/sounds/background.mp3");
-        this.load.audio("background2", "/sounds/background2.mp3");
+
+    // roofttop & detective background music
+    this.load.audio("background2", "/sounds/background2.mp3");
 
 
   }
