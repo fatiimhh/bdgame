@@ -24,9 +24,9 @@ this.captureSfx = this.sound.add("capture", {
   volume: 0.7,
 });
 
-this.alertSfx = this.sound.add("alert", {
+/*this.alertSfx = this.sound.add("alert", {
   volume: 0.6,
-});
+}); */
 
 this.music = this.sound.add("pursuit", {
   loop: true,
@@ -259,9 +259,9 @@ this.music.play();
       `TIME LEFT: ${this.timeLeft}`
     );
 
-    if (this.timeLeft <= 10) { // play alert sound when time is running out
-  this.alertSfx.play(); 
-}
+  /* if (this.timeLeft <= 10) */ { // play alert sound when time is running out
+ // this.alertSfx.play(); 
+} 
   }
 
   // WIN
@@ -286,7 +286,7 @@ this.music.play();
     this.captureSfx.play(); // play capture sound
 
     this.music.stop();
-  }
+      }
 
   // LOSE 
   gameOver() {
