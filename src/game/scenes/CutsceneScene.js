@@ -15,6 +15,7 @@ export default class CutsceneScene extends Phaser.Scene {
       "> ANALYZING PROFILE...",
       "> STRENGTH: ELITE",
       "> GYM PERFORMANCE: EXCEPTIONAL",
+      "FACE CARD: TOO POWERFUL FOR THIS SYSTEM",
       "> SLEEP SCHEDULE: QUESTIONABLE",
       "> DETECTIVE POTENTIAL: CONFIRMED",
       "> STATUS: READY",
