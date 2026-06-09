@@ -15,7 +15,7 @@ export default class CutsceneScene extends Phaser.Scene {
       "> ANALYZING PROFILE...",
       "> STRENGTH: ELITE",
       "> GYM PERFORMANCE: EXCEPTIONAL",
-      "FACE CARD: TOO POWERFUL FOR THIS SYSTEM",
+      "> FACE CARD: TOO POWERFUL FOR THIS SYSTEM",
       "> SLEEP SCHEDULE: QUESTIONABLE",
       "> DETECTIVE POTENTIAL: CONFIRMED",
       "> STATUS: READY",
@@ -24,7 +24,7 @@ export default class CutsceneScene extends Phaser.Scene {
     let currentLine = 0; 
 
     this.textObject = this.add.text(80, 120, "", {
-      fontSize: "25px",
+      fontSize: "20px",
       color: "#abcebf",
       fontFamily: "monospace",
       lineSpacing: 9,
