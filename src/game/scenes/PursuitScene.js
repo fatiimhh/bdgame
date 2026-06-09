@@ -24,7 +24,7 @@ export default class PursuitScene extends Phaser.Scene {
     this.jumpSfx = this.sound.add("jump", { volume: 0.5 });
     this.captureSfx = this.sound.add("capture", { volume: 0.7 });
 
-    this.music = this.sound.add("pursuit", {
+    this.music = this.sound.add("gotham", {
       loop: true,
       volume: 0.7,
     });
