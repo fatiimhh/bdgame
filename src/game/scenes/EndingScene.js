@@ -29,7 +29,7 @@ export default class EndingScene extends Phaser.Scene {
     this.fullText = [
       "ANALYZING FINAL PROFILE...",
       "",
-      `SUBJECT: ${this.registry.get("playerName") || "OBADA"}`,
+      `SUBJECT: ${this.registry.get("playerName") || "RUNNING ON PURE MAIN CHARACTER ENERGY"}`,
       "",
       "STATUS: ACTIVE IN GOTHAM SYSTEM",
       "MISSION: DEFEND THE BAT SIGNAL",
