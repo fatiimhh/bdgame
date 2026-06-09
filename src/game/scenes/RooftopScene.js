@@ -35,9 +35,9 @@ export default class RooftopScene extends Phaser.Scene {
     this.ground.create(900, 520).setDisplaySize(600, 30).refreshBody();
     this.ground.create(1400, 380).setDisplaySize(450, 30).refreshBody();
 
-    // =
+   
     // PLAYER
-    //
+    
     this.player = this.physics.add.sprite(150, 750, "batman");
 
     this.player.setScale(0.9);
@@ -95,7 +95,7 @@ export default class RooftopScene extends Phaser.Scene {
    
     this.signals = [];
     this.signalsCollected = 0;
-    this.totalSignals = 5;
+    this.totalSignals = 4;
 
     for (let i = 0; i < this.totalSignals; i++) {
       const x = Phaser.Math.Between(200, 1800);
@@ -185,7 +185,7 @@ export default class RooftopScene extends Phaser.Scene {
 
     // FIXED JUMP 
     if (Phaser.Input.Keyboard.JustDown(this.cursors.up) && isGrounded) {
-      this.player.setVelocityY(-650);
+      this.player.setVelocityY(-750);
     }
 
     // DASH
