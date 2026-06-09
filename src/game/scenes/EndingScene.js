@@ -29,7 +29,7 @@ export default class EndingScene extends Phaser.Scene {
     this.fullText = [
       "> ANALYZING FINAL PROFILE...",
       "",
-      `>SUBJECT: ${this.registry.get("playerName") || "RUNNING ON PURE MAIN CHARACTER ENERGY"}`,
+      `> SUBJECT: ${this.registry.get("playerName") || "RUNNING ON PURE MAIN CHARACTER ENERGY"}`,
       "",
       "> STATUS: ACTIVE IN GOTHAM SYSTEM",
       "> MISSION: DEFEND THE BAT SIGNAL",
@@ -37,7 +37,7 @@ export default class EndingScene extends Phaser.Scene {
       "",
       "> DETERMINATION: ABSOLUTE",
       "> FOCUS: LASER-SHARP",
-      "HEART: TOO GOOD FOR THIS CITY",
+      "> HEART: TOO GOOD FOR THIS CITY",
       "",
       "> NOTES:",
       "> YOU SHOWED UP WHEN IT MATTERED.",
