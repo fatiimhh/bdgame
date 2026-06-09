@@ -6,140 +6,92 @@ export default class RooftopScene extends Phaser.Scene {
   }
 
   create() {
-    //  Gotham background
+    // Gotham background
     this.cameras.main.setBackgroundColor("#02020a");
 
-    //  Skyline layers
+    // Skyline layers
     this.cityBack = this.add.rectangle(640, 400, 1400, 300, 0x0a0a1a);
     this.cityMid = this.add.rectangle(640, 500, 1400, 300, 0x050514);
     this.cityFront = this.add.rectangle(640, 650, 1400, 200, 0x03030f);
 
-    //  Rooftop ground
+    // Ground
     this.ground = this.add.rectangle(640, 700, 1400, 120, 0x111111);
     this.physics.add.existing(this.ground, true);
 
-    //  BATMAN SPRITE
+    // Player
     this.player = this.physics.add.sprite(100, 600, "batman");
-
-    this.player.setScale(0.9); 
+    this.player.setScale(0.9);
     this.player.setCollideWorldBounds(true);
 
-
-// walk animation
-    this.anims.create({   
-  key: "walk",
-  frames: this.anims.generateFrameNumbers("batman", {
-    start: 0,
-    end: 3,
-  }),
-  frameRate: 10,
-  repeat: -1,
-});
-
-    //  Camera
+    // Camera
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setZoom(1.1);
     this.cameras.main.setLerp(0.1, 0.1);
 
+    // INPUT
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+    this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    ///////////////////////////////////
-    //  SOUNDS
-
-    this.music = this.sound.add("background2", {
-      loop: false,
-      volume: 0.4,
-    });
-
-    this.music.play();
-
-     this.sound.pauseOnBlur = false;
+    // SOUNDS 
+    this.sound.pauseOnBlur = false;
 
     this.sounds = {
-      rain: this.sound.add("rain", {
-        loop: true,
-        volume: 0.25,
-      }),
-
-      wind: this.sound.add("wind", {
-        loop: true,
-        volume: 0.15,
-      }),
-
-      dash: this.sound.add("dash", {
-        volume: 0.5,
-      }),
-
-      collect: this.sound.add("collect", {
-        volume: 0.5,
-      }),
+      rain: this.sound.add("rain", { loop: true, volume: 0.25 }),
+      wind: this.sound.add("wind", { loop: true, volume: 0.15 }),
+      dash: this.sound.add("dash", { volume: 0.5 }),
+      collect: this.sound.add("collect", { volume: 0.6 }),
+      music: this.sound.add("background2", { loop: true, volume: 0.4 }),
     };
 
-    // Start ambience
+    this.sounds.music.play();
     this.sounds.rain.play();
-    this.sounds.wind.play(); 
-///////////////////////////////////
+    this.sounds.wind.play();
 
-
-    //  Input
-    this.cursors = this.input.keyboard.createCursorKeys();
-
-    this.shiftKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SHIFT
-    );
-
-    this.spaceKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
-
-    //  Dash system
+    // DASH
     this.dashCooldown = 0;
 
-    //  Mission system
+    // SIGNAL SYSTEM 
+    this.signals = [];
     this.signalsCollected = 0;
     this.totalSignals = 5;
 
-    this.signals = [];
-
-    //  Create glowing signals
     for (let i = 0; i < this.totalSignals; i++) {
       const x = Phaser.Math.Between(200, 1100);
       const y = Phaser.Math.Between(150, 600);
 
-      //  glow layer
-      const glow = this.add.circle(x, y, 26, 0xffff00, 0.15);
+      // glow
+      const glow = this.add.circle(x, y, 18, 0xffff00, 0.15);
 
       this.tweens.add({
         targets: glow,
-        scale: 1.3,
+        scale: 1.4,
         alpha: 0.05,
-        duration: 800,
+        duration: 900,
         yoyo: true,
         repeat: -1,
       });
 
-      //  signal core
-      const signal = this.add.circle(x, y, 14, 0xffff00, 0.7);
+      // bat signal sprite
+      const signal = this.physics.add.sprite(x, y, "batSignal");
+      signal.setScale(0.12);
+      signal.body.setAllowGravity(false);
+      signal.body.setImmovable(true);
 
-      this.physics.add.existing(signal, true);
-
+      signal.glow = glow;
       this.signals.push(signal);
 
-      //  collection overlap
       this.physics.add.overlap(this.player, signal, () => {
         if (!signal.active) return;
 
         signal.destroy();
         glow.destroy();
 
-        /////////////////
-        //  collect sound
         this.sounds.collect.play();
-        /////////////////
 
         this.signalsCollected++;
         this.updateUI();
 
-        //  Mission complete
         if (this.signalsCollected >= this.totalSignals) {
           this.time.delayedCall(600, () => {
             this.scene.start("DetectiveScene");
@@ -148,28 +100,24 @@ export default class RooftopScene extends Phaser.Scene {
       });
     }
 
-    //  collision with ground
+    // COLLISION
     this.physics.add.collider(this.player, this.ground);
 
-    //  UI
+    // UI
     this.uiText = this.add.text(70, 70, "", {
       fontSize: "18px",
       color: "#ffffff",
       fontFamily: "monospace",
     });
-
-    // UI stays fixed on screen
     this.uiText.setScrollFactor(0);
 
     this.updateUI();
 
-    // Rain
+    // RAIN
     this.createRain();
   }
 
-  update(time, delta) {
-    
-    //  Movement physics
+  update() {
     const acceleration = 18;
     const maxSpeed = this.shiftKey.isDown ? 420 : 260;
     const friction = 0.92;
@@ -178,31 +126,27 @@ export default class RooftopScene extends Phaser.Scene {
     let vy = this.player.body.velocity.y;
 
     const isMoving =
-  this.cursors.left.isDown ||
-  this.cursors.right.isDown ||
-  this.cursors.up.isDown ||
-  this.cursors.down.isDown;
+      this.cursors.left.isDown ||
+      this.cursors.right.isDown ||
+      this.cursors.up.isDown ||
+      this.cursors.down.isDown;
 
-if (isMoving) {             // play walk animation
-  this.player.anims.play("walk", true);
-} else {
-  this.player.anims.stop();
-  this.player.setFrame(0); // idle frame
-}
+    if (isMoving) {
+      this.player.anims.play("walk", true);
+    } else {
+      this.player.anims.stop();
+      this.player.setFrame(0);
+    }
 
-if (this.cursors.left.isDown) { // flip sprite based on direction
-  this.player.setFlipX(true);
-} else if (this.cursors.right.isDown) {
-  this.player.setFlipX(false);
-}
+    if (this.cursors.left.isDown) this.player.setFlipX(true);
+    else if (this.cursors.right.isDown) this.player.setFlipX(false);
 
-    //  movement input
     if (this.cursors.left.isDown) vx -= acceleration;
-  if (this.cursors.right.isDown) vx += acceleration;
+    if (this.cursors.right.isDown) vx += acceleration;
     if (this.cursors.up.isDown) vy -= acceleration;
-   if (this.cursors.down.isDown) vy += acceleration;
+    if (this.cursors.down.isDown) vy += acceleration;
 
-    //  DASH
+    // DASH
     if (
       Phaser.Input.Keyboard.JustDown(this.spaceKey) &&
       this.dashCooldown <= 0
@@ -216,62 +160,47 @@ if (this.cursors.left.isDown) { // flip sprite based on direction
       else vx = dashPower;
 
       this.dashCooldown = 800;
-
-            //////
-      //  dash sound
-       this.sounds.dash.play();
-            //////
-
-      //  cinematic shake
       this.cameras.main.shake(80, 0.01);
+
+      this.sounds.dash.play(); //  dash sound
     }
 
-    //  Parallax skyline movement
+    // parallax
     this.cityBack.x = 640 + vx * 0.02;
     this.cityMid.x = 640 + vx * 0.05;
     this.cityFront.x = 640 + vx * 0.08;
 
-    //  cooldown timer 
-    if (this.dashCooldown > 0) {
-      this.dashCooldown -= delta;
-    }
+    if (this.dashCooldown > 0) this.dashCooldown -= 16;
 
-    //  friction 
     vx *= friction;
     vy *= friction;
 
-    //  speed limits
     vx = Phaser.Math.Clamp(vx, -maxSpeed, maxSpeed);
     vy = Phaser.Math.Clamp(vy, -maxSpeed, maxSpeed);
 
-    // movement apply
     this.player.body.setVelocity(vx, vy);
 
-    //  tilt effect 
-   // this.player.rotation = vx * 0.001;
+    // sync glow
+    this.signals.forEach((signal) => {
+      if (signal.glow) {
+        signal.glow.x = signal.x;
+        signal.glow.y = signal.y;
+      }
+    });
   }
 
-  //  UI
   updateUI() {
     this.uiText.setText(
       `BAT SIGNALS: ${this.signalsCollected} / ${this.totalSignals}`
     );
   }
 
-  //  Rain effect
   createRain() {
     for (let i = 0; i < 120; i++) {
       const x = Phaser.Math.Between(0, 1280);
       const y = Phaser.Math.Between(0, 720);
 
-      const drop = this.add.rectangle(
-        x,
-        y,
-        2,
-        12,
-        0x88ccff,
-        0.25
-      );
+      const drop = this.add.rectangle(x, y, 2, 12, 0x88ccff, 0.25);
 
       this.tweens.add({
         targets: drop,

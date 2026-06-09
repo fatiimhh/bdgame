@@ -15,8 +15,13 @@ export default class BootScene extends Phaser.Scene {
 });
 
 // cutscene logo
-this.load.image("batLogo", "/assets/batman_logo.png");
+    this.load.image("batLogo", "/assets/batman_logo.png");
 
+// Rooftop scene assets
+   this.load.image(
+  "batSignal",
+  "/assets/batSignal.png"
+    );
 
     // rooftop scene sounds
     this.load.audio("rain", "/sounds/rain.mp3");
