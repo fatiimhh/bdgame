@@ -27,6 +27,10 @@ export default class FinalLevelScene extends Phaser.Scene {
 
     this.music.play();
 
+    this.events.on("shutdown", () => { // stop music when scene ends
+  if (this.music) this.music.stop();
+});
+
 
     //  BAT SIGNAL 
 

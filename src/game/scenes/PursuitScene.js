@@ -31,6 +31,11 @@ export default class PursuitScene extends Phaser.Scene {
 
     this.music.play();
 
+    // stop music when scene ends
+    this.events.on("shutdown", () => {
+  if (this.music) this.music.stop();
+});
+
     // MOVING PLATFORMS
     this.platforms = this.physics.add.staticGroup();
 
