@@ -10,7 +10,7 @@ export default class EndingScene extends Phaser.Scene {
     // background screen
     this.cameras.main.setBackgroundColor("#0a86ac");
 
-    //  sound effect
+    //  sound effect (music)
     this.music = this.sound.add("background", {
       loop: false,
       volume: 0.4,
@@ -18,33 +18,43 @@ export default class EndingScene extends Phaser.Scene {
 
     this.music.play();
 
-    //  Batcomputer text
+    // narration
+    this.narration2= this.sound.add("narration2", {
+      volume: 0.9,
+    });
+
+    this.narration2.play();
+
+    // Batcomputer text
     this.fullText = [
       "ANALYZING FINAL PROFILE...",
       "",
-      `SUBJECT: ${this.registry.get("playerName") || "UNKNOWN"}`,
+      `SUBJECT: ${this.registry.get("playerName") || "OBADA"}`,
       "",
-      "STATUS: GOTHAM PROTECTOR",
-      "STRENGTH: HIGH",
-      "DISCIPLINE: UNBREAKABLE",
-      "GYM PERFORMANCE: ELITE",
+      "STATUS: ACTIVE IN GOTHAM SYSTEM",
+      "MISSION: DEFEND THE BAT SIGNAL",
+      "RESULT: COMPLETED",
+      "",
       "DETERMINATION: ABSOLUTE",
+      "FOCUS: LASER-SHARP",
+      "HEART: TOO GOOD FOR THIS CITY",
       "",
-      "FINAL RESULT: APPROVED",
+      "NOTES:",
+      "YOU SHOWED UP WHEN IT MATTERED.",
+      "YOU DID WHAT WAS REQUIRED.",
       "",
-      "THIS WAS NEVER JUST A SIMULATION.",
-      "IT WAS A SIGNAL.",
+      "GOTHAM WILL REMEMBER THAT IN ITS OWN WAY.",
       "",
-      "AND YOU ANSWERED IT.",
+      "ENDING SIMULATION...",
       "",
-      "HAPPY BIRTHDAY."
+      "HAPPY BIRTHDAY! 🖤🦇"
     ];
 
     this.currentLine = 0;
     this.displayedText = "";
 
     this.textObject = this.add.text(80, 80, "", {
-      fontSize: "27px",
+      fontSize: "20px",
       color: "#abcebf",
       fontFamily: "monospace",
       lineSpacing: 8,
@@ -94,14 +104,21 @@ export default class EndingScene extends Phaser.Scene {
     // final flash
     this.cameras.main.flash(800, 255, 255, 255);
 
-    //  fade music
+    // fade music
     this.tweens.add({
       targets: this.music,
       volume: 0,
       duration: 2000,
     });
 
-    //  restart or end screen
+    // fade narration
+    this.tweens.add({
+      targets: this.narration,
+      volume: 0,
+      duration: 2000,
+    });
+
+    // restart or end screen
     this.time.delayedCall(5000, () => {
 
       this.add.text(640, 650, "PRESS REFRESH TO PLAY AGAIN", {

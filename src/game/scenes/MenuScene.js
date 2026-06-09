@@ -23,6 +23,10 @@ export default class MenuScene extends Phaser.Scene {
 
     this.music.play();
 
+    this.events.on("shutdown", () => {
+  if (this.music) this.music.stop();
+});
+
     // main title
     const title = this.add.text(
       640,

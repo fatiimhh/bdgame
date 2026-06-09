@@ -54,6 +54,9 @@ export default class BootScene extends Phaser.Scene {
     // roofttop & detective background music
     this.load.audio("background2", "/sounds/background2.mp3");
 
+      // ending scene narration
+        this.load.audio("narration2", "/sounds/narration2.mp3"); 
+
 
   }
 

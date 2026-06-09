@@ -18,6 +18,10 @@ export default class DetectiveScene extends Phaser.Scene {
 
     this.music.play();
 
+    this.events.on("shutdown", () => { // stop music when scene ends
+  if (this.music) this.music.stop();
+});
+
     //  sound effects
     this.clickSfx = this.sound.add("click");
     this.correctSfx = this.sound.add("correct");

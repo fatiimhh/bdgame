@@ -80,6 +80,10 @@ export default class RooftopScene extends Phaser.Scene {
 
     this.music.play();
 
+    this.events.on("shutdown", () => {
+  if (this.music) this.music.stop();
+});
+
     this.sounds = {
       rain: this.sound.add("rain", { loop: true, volume: 0.2 }),
       wind: this.sound.add("wind", { loop: true, volume: 0.15 }),
