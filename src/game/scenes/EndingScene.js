@@ -27,27 +27,27 @@ export default class EndingScene extends Phaser.Scene {
 
     // Batcomputer text
     this.fullText = [
-      "ANALYZING FINAL PROFILE...",
+      "> ANALYZING FINAL PROFILE...",
       "",
-      `SUBJECT: ${this.registry.get("playerName") || "RUNNING ON PURE MAIN CHARACTER ENERGY"}`,
+      `>SUBJECT: ${this.registry.get("playerName") || "RUNNING ON PURE MAIN CHARACTER ENERGY"}`,
       "",
-      "STATUS: ACTIVE IN GOTHAM SYSTEM",
-      "MISSION: DEFEND THE BAT SIGNAL",
-      "RESULT: COMPLETED",
+      "> STATUS: ACTIVE IN GOTHAM SYSTEM",
+      "> MISSION: DEFEND THE BAT SIGNAL",
+      "> RESULT: COMPLETED",
       "",
-      "DETERMINATION: ABSOLUTE",
-      "FOCUS: LASER-SHARP",
+      "> DETERMINATION: ABSOLUTE",
+      "> FOCUS: LASER-SHARP",
       "HEART: TOO GOOD FOR THIS CITY",
       "",
-      "NOTES:",
-      "YOU SHOWED UP WHEN IT MATTERED.",
-      "YOU DID WHAT WAS REQUIRED.",
+      "> NOTES:",
+      "> YOU SHOWED UP WHEN IT MATTERED.",
+      "> YOU DID WHAT WAS REQUIRED.",
       "",
-      "GOTHAM WILL REMEMBER THAT IN ITS OWN WAY.",
+      "> GOTHAM WILL REMEMBER THAT IN ITS OWN WAY.",
       "",
-      "ENDING SIMULATION...",
+      "> ENDING SIMULATION...",
       "",
-      "HAPPY BIRTHDAY! 🖤🦇"
+      "> HAPPY BIRTHDAY! 🖤🦇"
     ];
 
     this.currentLine = 0;
