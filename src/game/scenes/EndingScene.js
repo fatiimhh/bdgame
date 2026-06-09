@@ -94,7 +94,7 @@ export default class EndingScene extends Phaser.Scene {
     // final flash
     this.cameras.main.flash(800, 255, 255, 255);
 
-    // 🎵 fade music
+    //  fade music
     this.tweens.add({
       targets: this.music,
       volume: 0,
@@ -106,7 +106,7 @@ export default class EndingScene extends Phaser.Scene {
 
       this.add.text(640, 650, "PRESS REFRESH TO PLAY AGAIN", {
         fontSize: "18px",
-        color: "#888",
+        color: "#313030",
         fontFamily: "monospace",
       }).setOrigin(0.5);
 
