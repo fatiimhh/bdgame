@@ -152,7 +152,7 @@ export default class RooftopScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.ground);
 
     //  UI
-    this.uiText = this.add.text(20, 20, "", {
+    this.uiText = this.add.text(70, 70, "", {
       fontSize: "18px",
       color: "#ffffff",
       fontFamily: "monospace",
@@ -168,6 +168,7 @@ export default class RooftopScene extends Phaser.Scene {
   }
 
   update(time, delta) {
+    
     //  Movement physics
     const acceleration = 18;
     const maxSpeed = this.shiftKey.isDown ? 420 : 260;
